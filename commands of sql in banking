@@ -1,0 +1,4 @@
+1)create database banking;
+2)use banking;
+3)CREATE TABLE accounts (S_No INT AUTO_INCREMENT PRIMARY KEY,Name VARCHAR(50),todays_date DATE,pin INT,Date_of_birth DATE,account_no BIGINT,Phone_no BIGINT,Email_id VARCHAR(100),aadhar_no BIGINT,address VARCHAR(200),balance DECIMAL(10,2),pan_no VARCHAR(15),debit_card_no BIGINT,expiry_date_debit_card DATE,cvv INT,debit_card_pin INT,ifsc_code VARCHAR(20),Account_type VARCHAR(20),Branch_name VARCHAR(50),Branch_code VARCHAR(20));
+4)select * from accounts;
