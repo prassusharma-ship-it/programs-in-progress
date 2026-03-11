@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 import random
 import mysql.connector as myconn
-mydb = myconn.connect(host="localhost", user="root", password="enter your own password", database="banking")
+mydb = myconn.connect(host="localhost", user="root", password="pujuku1901", database="banking")
 db_cursor = mydb.cursor()
 def main():
     while True:
@@ -28,7 +28,7 @@ def login():
         acc_no = int(input("Enter account number: "))
         pin = int(input("Enter PIN: "))
 
-        query = "SELECT * FROM atm1 WHERE account_no=%s AND pin=%s"
+        query = "SELECT * FROM accounts WHERE account_no=%s AND pin=%s"
         db_cursor.execute(query,(acc_no,pin))
         result = db_cursor.fetchone()
         if result:
@@ -72,7 +72,7 @@ def login():
         else:
             print("Invalid choice")
 def check_balance(acc_no):
-    query="SELECT balance FROM atm1 WHERE account_no=%s"
+    query="SELECT balance FROM accounts WHERE account_no=%s"
     db_cursor.execute(query,(acc_no,))
     balance=db_cursor.fetchone()[0]
     return balance
@@ -89,7 +89,7 @@ def deposit_money(acc_no):
         elif amount>1000000:
             print("Amount too large.")
         else:
-            query="UPDATE atm1 SET balance=balance+%s WHERE account_no=%s"
+            query="UPDATE accounts SET balance=balance+%s WHERE account_no=%s"
             db_cursor.execute(query,(amount,acc_no))
             mydb.commit()
 
@@ -114,7 +114,7 @@ def withdraw_money(acc_no):
         elif amount>balance:
             print("Insufficient balance")
         else:
-            query="UPDATE atm1 SET balance=balance-%s WHERE account_no=%s"
+            query="UPDATE accounts SET balance=balance-%s WHERE account_no=%s"
             db_cursor.execute(query,(amount,acc_no))
             mydb.commit()
 
@@ -129,7 +129,7 @@ def withdraw_money(acc_no):
 def transfer_money(acc_no):
     receiver_acc_no=int(input("Enter receiver account number: "))
 
-    query="SELECT * FROM atm1 WHERE account_no=%s"
+    query="SELECT * FROM accounts WHERE account_no=%s"
     db_cursor.execute(query,(receiver_acc_no,))
     receiver_account=db_cursor.fetchone()
 
@@ -147,16 +147,16 @@ def transfer_money(acc_no):
         return
 
 
-    query="SELECT balance FROM atm1 WHERE account_no=%s"
+    query="SELECT balance FROM accounts WHERE account_no=%s"
     db_cursor.execute(query,(acc_no,))
     sender_balance=db_cursor.fetchone()[0]
 
     if amount>sender_balance:
         print("Insufficient balance")
     else:
-        query="UPDATE atm1 SET balance=balance-%s WHERE account_no=%s"
+        query="UPDATE accounts SET balance=balance-%s WHERE account_no=%s"
         db_cursor.execute(query,(amount,acc_no))
-        query="UPDATE atm1 SET balance=balance+%s WHERE account_no=%s"
+        query="UPDATE accounts SET balance=balance+%s WHERE account_no=%s"
         db_cursor.execute(query,(amount,receiver_acc_no))
         mydb.commit()
         print("Transfer successful")
@@ -171,12 +171,12 @@ def change_pin(acc_no):
         print("PIN must be 4 digits")
         return
     else:
-        query="UPDATE atm1 SET pin=%s WHERE account_no=%s"
+        query="UPDATE accounts SET pin=%s WHERE account_no=%s"
         db_cursor.execute(query,(new_pin,acc_no))
         mydb.commit()
         print("PIN changed successfully")
 def account_details(acc_no):
-    query="SELECT * FROM atm1 WHERE account_no=%s"
+    query="SELECT * FROM accounts WHERE account_no=%s"
     db_cursor.execute(query,(acc_no,))
     account=db_cursor.fetchone()
 
@@ -226,7 +226,7 @@ def create_account():
     while True:
         account_no=random.randint(1000000000,9999999999)
 
-        query="SELECT account_no FROM atm1 WHERE account_no=%s"
+        query="SELECT account_no FROM accounts WHERE account_no=%s"
         db_cursor.execute(query,(account_no,))
 
         if not db_cursor.fetchone():
