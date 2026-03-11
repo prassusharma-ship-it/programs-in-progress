@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 import random
 import mysql.connector as myconn
-mydb = myconn.connect(host="localhost", user="root", password="pujuku1901", database="banking")
+mydb = myconn.connect(host="localhost", user="root", password="enter your own password", database="banking")
 db_cursor = mydb.cursor()
 def main():
     while True:
