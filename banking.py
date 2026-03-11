@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 import random
 import mysql.connector as myconn
-mydb = myconn.connect(host="localhost", user="root", password="pujuku1901", database="atm")
+mydb = myconn.connect(host="localhost", user="root", password="enter your own password", database="banking")
 db_cursor = mydb.cursor()
 def main():
     while True:
@@ -398,7 +398,7 @@ def create_account():
     print(f"your default pin is {default_pin} please, remember it for future use")
 
     query = """
-    INSERT INTO atm1 (
+    INSERT INTO accounts (
         Name,
         todays_date,
         pin,
